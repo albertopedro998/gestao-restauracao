@@ -1,0 +1,123 @@
+Para um software ser considerado de qualidade, ele precisa cumprir um conjunto de requisitos fundamentais que garantem bom funcionamento, segurança, facilidade de uso e manutenção. Esses requisitos geralmente são divididos em requisitos funcionais e não funcionais.
+
+Abaixo está o resumo completo e claro:
+
+✅ Requisitos para um Software de Qualidade
+1. Requisitos Funcionais
+
+São as funcionalidades que o sistema deve realizar.
+
+Exemplos:
+
+O sistema deve permitir cadastro, edição, exclusão e consulta de dados.
+
+Deve realizar login e controle de acesso por perfil.
+
+Deve gerar relatórios.
+
+Deve enviar notificações.
+
+Deve validar dados corretamente.
+
+🎯 Objetivo: garantir que o software faça exatamente o que o usuário precisa.
+
+✅ 2. Requisitos Não Funcionais
+
+São características que garantem a qualidade do software, além das funcionalidades.
+
+2.1 Confiabilidade (Reliability)
+
+O sistema deve funcionar de forma consistente.
+
+Deve lidar com falhas de forma segura.
+
+Deve manter integridade dos dados.
+
+2.2 Usabilidade (Usability)
+
+Interface fácil de usar.
+
+Navegação intuitiva.
+
+Feedback claro ao usuário.
+
+2.3 Eficiência / Performance
+
+Responder rápido.
+
+Consumir poucos recursos.
+
+Escalar bem com aumento de usuários.
+
+2.4 Manutenibilidade (Maintainability)
+
+Código limpo e organizado.
+
+Documentação clara.
+
+Estrutura modular.
+
+Fácil de corrigir e ampliar.
+
+2.5 Segurança (Security)
+
+Controlar acesso por permissões.
+
+Proteger dados sensíveis.
+
+Criptografar informações.
+
+Prevenir ataques (SQL Injection, XSS, etc.).
+
+2.6 Portabilidade
+
+Rodar em diferentes dispositivos/sistemas operacionais, quando aplicável.
+
+2.7 Compatibilidade
+
+Integrar-se com outros sistemas.
+
+Utilizar APIs bem definidas.
+
+2.8 Escalabilidade
+
+Aumentar capacidade conforme novos usuários entram.
+
+2.9 Robustez
+
+Suportar erros sem travar.
+
+Validar entradas perigosas.
+
+2.10 Testabilidade
+
+Permitir criação de testes unitários, de integração e automatizados.
+
+💡 Outros requisitos importantes
+
+Documentação adequada para desenvolvedores e usuários.
+
+Aderência a padrões e boas práticas.
+
+Controle de versão (Git).
+
+Qualidade da equipe (processos bem definidos).
+
+Boa arquitetura (MVC, Clean Architecture, Domain Driven Design etc.).
+
+Ciclos de desenvolvimento claros (Scrum, Kanban).
+
+🧩 Resumo Geral
+
+Um software de qualidade deve ser:
+
+✔ Funcional
+✔ Seguro
+✔ Rápido
+✔ Fácil de usar
+✔ Fácil de manter
+✔ Estável
+✔ Bem documentado
+✔ Escalável
+✔ Portável
+✔ Testável

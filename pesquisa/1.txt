@@ -1,0 +1,217 @@
+🍽️ FUNCIONALIDADES DE UM SISTEMA DE RESTAURAÇÃO / ALIMENTOS
+
+Um sistema de restauração (como restaurantes, cantinas, cafés, refeitórios, hotéis) é composto por módulos interligados que cobrem desde a compra de matérias-primas até o atendimento e faturação.
+
+🧾 1. Gestão de Compras e Fornecedores
+
+Controla todo o processo de aquisição de matérias-primas e produtos.
+
+Principais funcionalidades:
+
+Cadastro e histórico de fornecedores
+
+Criação de pedidos de compra
+
+Receção de mercadorias (entrada em stock)
+
+Controlo de qualidade e validade
+
+Comparação de preços e análise de custo de fornecedores
+
+Integração com faturação (faturas de compra)
+
+🧩 Objetivo: garantir fornecimento de produtos de qualidade ao menor custo possível.
+
+🧺 2. Gestão de Stocks e Inventário
+
+Permite acompanhar tudo o que entra e sai do armazém e da cozinha.
+
+Funcionalidades:
+
+Entradas e saídas de stock automáticas (compras, consumo, vendas)
+
+Inventário físico e reconciliação automática
+
+Alertas de stock mínimo ou validade próxima
+
+Lotes e rastreabilidade (de onde veio cada ingrediente)
+
+Controlo de desperdício
+
+📦 Objetivo: evitar faltas e desperdícios, mantendo o stock sempre atualizado.
+
+👨‍🍳 3. Gestão de Produção e Cozinha
+
+Controla o processo de preparação dos pratos.
+
+Funcionalidades:
+
+Fichas técnicas (receitas) com custo e ingredientes
+
+Planeamento de produção (quantidades diárias)
+
+Impressão de comandas automáticas por secção (grelha, sobremesa, etc.)
+
+Registo de consumo de ingredientes por prato
+
+Integração com HACCP (temperaturas, limpeza, segurança alimentar)
+
+🍲 Objetivo: garantir consistência, segurança alimentar e controlo de custos por prato.
+
+🪑 4. Gestão de Mesas e Reservas
+
+Organiza o espaço físico e o fluxo de clientes.
+
+Funcionalidades:
+
+Mapa interativo de mesas (ocupadas, reservadas, livres)
+
+Reservas online e internas
+
+Espera e fila de clientes (waiting list)
+
+Agrupamento e divisão de mesas
+
+🍽️ Objetivo: otimizar a ocupação e reduzir o tempo de espera.
+
+💳 5. POS (Ponto de Venda) / Atendimento
+
+É o módulo central do serviço — usado pelos garçons, caixas e entregadores.
+
+Funcionalidades:
+
+Registo de pedidos (mesa, balcão, delivery)
+
+Envio automático das comandas para cozinha/bar
+
+Divisão de contas por cliente/mesa
+
+Cancelamentos com autorização (controle de fraudes)
+
+Emissão de faturas e integração com impressoras fiscais
+
+Múltiplos métodos de pagamento (dinheiro, cartão, multicaixa, mobile)
+
+💰 Objetivo: agilidade no atendimento e precisão na faturação.
+
+📱 6. Gestão de Entregas (Delivery / Takeaway)
+
+Funcionalidades voltadas para pedidos fora do local.
+
+Funcionalidades:
+
+Registo de pedidos para retirada ou entrega
+
+Endereços de clientes e histórico de pedidos
+
+Rastreamento de entregadores
+
+Integração com plataformas (Glovo, Uber Eats, etc.)
+
+Notificações automáticas de status
+
+🚗 Objetivo: ampliar o serviço e controlar pedidos externos.
+
+👥 7. Gestão de Clientes e Fidelização
+
+Centraliza informações de clientes e programas de fidelidade.
+
+Funcionalidades:
+
+Base de dados de clientes (nome, contacto, preferências)
+
+Programas de pontos e descontos automáticos
+
+Envio de SMS ou e-mail marketing
+
+Análise de consumo (frequência, ticket médio)
+
+💌 Objetivo: fidelizar clientes e aumentar o retorno.
+
+👔 8. Gestão de Funcionários e Turnos
+
+Administra o pessoal envolvido na operação.
+
+Funcionalidades:
+
+Cadastro de funcionários e cargos
+
+Controle de horários e turnos
+
+Permissões e níveis de acesso ao sistema
+
+Registo de desempenho e assiduidade
+
+🕒 Objetivo: garantir organização e produtividade da equipa.
+
+💼 9. Gestão Financeira e Contabilidade
+
+Lida com toda a parte económica e de relatórios do restaurante.
+
+Funcionalidades:
+
+Registo automático de vendas e despesas
+
+Fecho de caixa diário
+
+Relatórios de rentabilidade por prato, categoria ou funcionário
+
+Gestão de IVA/Imposto de Consumo
+
+Exportação para software de contabilidade
+
+📊 Objetivo: manter o negócio lucrativo e fiscalmente em conformidade.
+
+🧼 10. Higiene e Segurança Alimentar (HACCP)
+
+Fundamental para garantir qualidade e evitar penalizações legais.
+
+Funcionalidades:
+
+Registo de temperatura de câmaras e equipamentos
+
+Checklists diárias de higiene
+
+Rastreabilidade de produtos e fornecedores
+
+Alertas automáticos de falhas nos controlos
+
+✅ Objetivo: cumprir normas sanitárias e garantir segurança alimentar.
+
+📈 11. Relatórios e Dashboard de Gestão
+
+Mostra dados analíticos em tempo real.
+
+Funcionalidades:
+
+Vendas por hora, produto, funcionário
+
+Margem de lucro por prato
+
+Análise de desperdício e custo real vs. teórico
+
+Previsões de compras com base em consumo histórico
+
+📉 Objetivo: ajudar a gestão na tomada de decisões estratégicas.
+
+🔒 12. Segurança, Auditoria e Backups
+
+Protege os dados e o funcionamento do sistema.
+
+Funcionalidades:
+
+Controle de acesso por função (role-based access)
+
+Logs de auditoria (quem alterou o quê e quando)
+
+Backups automáticos e restauração rápida
+
+Criptografia de dados sensíveis
+
+🧠 Objetivo: manter integridade e confiabilidade do sistema.
+
+🧭 Em resumo:
+
+Um sistema de restauração eficaz deve integrar:
+
+Compras → Stock → Produção → Serviço → Faturação → Análise → Melhoria Contínua

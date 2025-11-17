@@ -1,0 +1,286 @@
+🍽️ ENTIDADES ENVOLVENTES EM UM SISTEMA DE RESTAURANTE
+
+Um sistema de restaurante envolve três grandes áreas:
+
+Área de atendimento (pedidos, mesas, clientes)
+
+Área operacional (produtos, estoque, funcionários)
+
+Área administrativa (caixa, finanças, relatórios)
+
+Vamos detalhar cada uma 👇
+
+🧾 1. ENTIDADES PRINCIPAIS (NÚCLEO DO SISTEMA)
+🧍 Cliente
+
+Representa quem faz o pedido.
+
+Atributos:
+
+id_cliente
+
+nome
+
+telefone
+
+email
+
+endereço (para delivery)
+
+Relacionamentos:
+
+Um cliente faz vários pedidos
+
+🧑‍🍳 Funcionário / Usuário
+
+Usuários do sistema (garçom, cozinheiro, gerente, administrador)
+
+Atributos:
+
+id_funcionario
+
+nome
+
+cargo (garçom, caixa, gerente...)
+
+login / senha
+
+nivel_acesso
+
+Relacionamentos:
+
+Um funcionário registra vários pedidos
+
+Um funcionário pode abrir/fechar o caixa
+
+🍔 Produto / Item de Cardápio
+
+Os pratos, bebidas, combos, sobremesas etc.
+
+Atributos:
+
+id_produto
+
+nome
+
+categoria (prato, bebida, sobremesa...)
+
+preco_venda
+
+custo
+
+estoque_atual
+
+imagem
+
+status (disponível/indisponível)
+
+Relacionamentos:
+
+Um produto aparece em vários itens de pedido
+
+🧾 Pedido
+
+O pedido feito pelo cliente (na mesa, balcão ou delivery)
+
+Atributos:
+
+id_pedido
+
+id_cliente (FK)
+
+id_funcionario (FK – garçom)
+
+id_mesa (FK, opcional)
+
+data_hora
+
+total
+
+status (aberto, em preparo, entregue, pago)
+
+Relacionamentos:
+
+Um pedido possui vários itens de pedido
+
+Um pedido pertence a um cliente e a um garçom
+
+🍟 Item do Pedido
+
+Tabela associativa entre Pedido e Produto.
+
+Atributos:
+
+id_item
+
+id_pedido (FK)
+
+id_produto (FK)
+
+quantidade
+
+preco_unitario
+
+subtotal
+
+Relacionamentos:
+
+Muitos itens pertencem a um único pedido
+
+Cada item se refere a um único produto
+
+🍷 2. ENTIDADES DE APOIO
+🍽️ Mesa
+
+Controla o status físico das mesas do restaurante.
+
+Atributos:
+
+id_mesa
+
+numero
+
+status (livre, ocupada, reservada)
+
+Relacionamentos:
+
+Uma mesa pode ter vários pedidos ao longo do tempo
+
+📦 Estoque / Movimento de Estoque
+
+Controla entradas e saídas de ingredientes e produtos.
+
+Atributos:
+
+id_movimento
+
+id_produto (FK)
+
+tipo (entrada/saída)
+
+quantidade
+
+data_movimento
+
+observacao
+
+Relacionamentos:
+
+Um produto gera vários movimentos de estoque
+
+💵 Caixa
+
+Registra as movimentações financeiras do dia.
+
+Atributos:
+
+id_caixa
+
+data_abertura
+
+data_fechamento
+
+saldo_inicial
+
+saldo_final
+
+status (aberto/fechado)
+
+Relacionamentos:
+
+Um caixa recebe várias vendas/pedidos pagos
+
+🧾 Pagamento
+
+Detalha como o pedido foi pago.
+
+Atributos:
+
+id_pagamento
+
+id_pedido (FK)
+
+forma_pagamento (dinheiro, cartão, pix...)
+
+valor_pago
+
+troco
+
+data_pagamento
+
+Relacionamentos:
+
+Um pedido pode ter vários pagamentos (ex: dividido entre amigos)
+
+💼 3. ENTIDADES ADMINISTRATIVAS
+🧮 Financeiro
+
+Controla receitas e despesas gerais.
+
+Atributos:
+
+id_lancamento
+
+tipo (entrada/saída)
+
+descricao
+
+valor
+
+data
+
+categoria (ex: compra de ingredientes, pagamento de funcionário)
+
+Relacionamentos:
+
+Pode estar vinculado a um caixa ou fornecedor
+
+🚚 Fornecedor
+
+Fornecedores de ingredientes e produtos.
+
+Atributos:
+
+id_fornecedor
+
+nome_fantasia
+
+cnpj / nif
+
+telefone
+
+email
+
+endereco
+
+Relacionamentos:
+
+Um fornecedor pode fornecer vários produtos
+
+🔗 4. DIAGRAMA DE RELACIONAMENTO (modelo simplificado)
+CLIENTE (1)───<(N) PEDIDO (1)───<(N) ITEM_PEDIDO >(N)───(1) PRODUTO
+                       │
+                       │
+                    (1)│
+                       ▼
+                    MESA
+
+FUNCIONARIO (1)───<(N) PEDIDO
+PRODUTO (1)───<(N) MOVIMENTO_ESTOQUE
+PEDIDO (1)───<(N) PAGAMENTO
+CAIXA (1)───<(N) PAGAMENTO
+FORNECEDOR (1)───<(N) PRODUTO
+
+⚙️ 5. Resumo rápido
+Entidade	Função principal
+Cliente	Quem faz os pedidos
+Funcionário	Quem atende ou administra
+Mesa	Local físico dos clientes
+Produto	Itens vendidos
+Pedido	Registro da venda
+ItemPedido	Detalhes do pedido
+Pagamento	Controle de pagamentos
+Caixa	Fechamento diário
+Estoque	Controle de insumos
+Fornecedor	Onde os produtos vêm
+Financeiro	Entradas e saídas gerais

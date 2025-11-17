@@ -1,0 +1,137 @@
+Qualidade de código significa escrever código que seja claro, organizado, eficiente, fácil de manter e sem bugs.
+É um dos pilares para garantir que o software seja sustentável a longo prazo.
+
+Aqui estão os principais requisitos e boas práticas para ter um código de qualidade:
+
+✅ 1. Clareza e legibilidade
+
+O código deve ser fácil de entender, mesmo para quem não o escreveu.
+
+Boas práticas:
+
+Nomes de variáveis e funções descritivos
+
+const totalAlunos = getTotalAlunos()
+
+
+Código bem identado.
+
+Evitar funções gigantes (funções pequenas e com responsabilidade única).
+
+Comentários só onde realmente necessário.
+
+✅ 2. Simplicidade
+
+Evitar complexidade desnecessária.
+
+Princípio:
+👉 “Faça o código mais simples possível, mas não mais simples que isso.”
+
+Exemplo ruim:
+
+if (x === true) {
+   // ...
+}
+
+
+Exemplo bom:
+
+if (x) {
+   // ...
+}
+
+✅ 3. Organização e padronização
+
+Use um padrão consistente no projeto inteiro.
+
+Inclui:
+
+Nomeação (camelCase, PascalCase, snake_case).
+
+Estrutura de pastas organizada.
+
+Seguir um style guide (ex: Airbnb Style Guide para JavaScript).
+
+Linters e formatadores (ESLint, Prettier).
+
+✅ 4. Separação de responsabilidades (SRP)
+
+Cada arquivo, classe ou função deve ter apenas uma responsabilidade.
+
+Exemplo:
+
+Uma função só deve validar dados, não salvar nem renderizar UI.
+
+✅ 5. Reuso e modularidade
+
+Escreva código reaproveitável:
+
+Criar funções reutilizáveis.
+
+Evitar duplicação de código (princípio DRY — Don’t Repeat Yourself).
+
+Criar módulos independentes e bem definidos.
+
+✅ 6. Segurança
+
+Código de qualidade também evita riscos:
+
+Validação de entrada.
+
+Prevenção de SQL Injection, XSS.
+
+Uso correto de tokens, senhas e segredos.
+
+✅ 7. Testabilidade
+
+Código deve ser testável.
+
+Funções puras onde possível.
+
+Dependências injetáveis.
+
+Testes unitários e de integração.
+
+Evitar código “espaguete”.
+
+✅ 8. Performance
+
+Não precisa ser perfeito, mas deve ser eficiente quando necessário.
+
+Evitar loops desnecessários.
+
+Usar estruturas adequadas (Map, Set, arrays, etc.).
+
+Cuidado com consultas ao banco dentro de loops.
+
+✅ 9. Manutenibilidade
+
+Código fácil de atualizar e corrigir.
+
+Boa documentação.
+
+Comentários úteis.
+
+Arquitetura bem definida (MVC, Clean Architecture etc.).
+
+✅ 10. Controle de versão bem utilizado
+
+Commits limpos e descritivos.
+
+Branches bem organizadas.
+
+Pull requests com revisão.
+
+🎯 Resumo rápido
+
+Código de qualidade é:
+
+✔ Legível
+✔ Simples
+✔ Padronizado
+✔ Seguro
+✔ Testável
+✔ Eficiente
+✔ Modular
+✔ Fácil de manter
+✔ Bem documentado
