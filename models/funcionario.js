@@ -1,7 +1,7 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+const bcrypt = require("bcryptjs");
+
+("use strict");
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Funcionario extends Model {
     /**
@@ -11,19 +11,26 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.hasMany(models.Pedido)
+      this.hasMany(models.Pedido);
+    }
+
+    async verifySession(password) {
+      return await bcrypt.compare(password, this.senha);
     }
   }
-  Funcionario.init({
-    nome: DataTypes.STRING,
-    cargo: DataTypes.STRING,
-    senha: DataTypes.STRING,
-    nif: DataTypes.STRING,
-    foto: DataTypes.STRING,
-    dtNascimento: DataTypes.DATE
-  }, {
-    sequelize,
-    modelName: 'Funcionario',
-  });
+  Funcionario.init(
+    {
+      nome: DataTypes.STRING,
+      cargo: DataTypes.STRING,
+      senha: DataTypes.STRING,
+      nif: DataTypes.STRING,
+      foto: DataTypes.STRING,
+      dtNascimento: DataTypes.DATE,
+    },
+    {
+      sequelize,
+      modelName: "Funcionario",
+    }
+  );
   return Funcionario;
 };

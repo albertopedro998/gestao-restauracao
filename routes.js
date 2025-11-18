@@ -1,37 +1,83 @@
 const { Router } = require("express");
+const multer = require("multer");
+
 const FuncionarioController = require("./controllers/FuncionarioController");
+const FuncionarioMiddleware = require("./middleware/FuncionarioMiddleware");
+
 const FornecedorController = require("./controllers/FornecedorController");
+const FornecedorMiddleware = require("./middleware/FornecedorMiddleware");
+
 const ClienteController = require("./controllers/ClienteController");
+const ClienteMiddleware = require("./middleware/ClienteMiddleware");
+
 const CardapioController = require("./controllers/CardapioController");
+
 const MesaController = require("./controllers/MesaController");
+
 const ProdutoController = require("./controllers/ProdutoController");
+
 const EstoqueController = require("./controllers/EstoqueController");
+
 const PagamentoController = require("./controllers/PagamentoController");
+
 const CaixaController = require("./controllers/CaixaController");
+
 const PedidoController = require("./controllers/PedidoController");
+
 const ProdutosPedidoController = require("./controllers/ProdutosPedidoController");
 
+const SessionController = require("./controllers/SessionController");
+
 const router = Router();
+const file = multer(require("./config/multer"));
+
+//============= SESSÕES E ROTAS PÚBLICAS =================
+router.post(`/login`, SessionController.login);
+router.post(`/logout`, SessionController.logout);
+
+//ROTAS PRIVADAS APARTIR DESTE PONTO
+router.use(SessionController.isLogged);
+
+//============= UPLOADS DE ARQUIVOS =================
+router.post(`/uploads`, file.single("file"), (req, res) => {
+  return res.send("Sucesso");
+});
 
 //============= FUNCIONARIOS =================
 router.get(`/funcionarios`, FuncionarioController.index);
 router.get(`/funcionarios/:id`, FuncionarioController.show);
-router.post(`/funcionarios`, FuncionarioController.create);
-router.put(`/funcionarios/:id`, FuncionarioController.update);
+router.post(
+  `/funcionarios`,
+  FuncionarioMiddleware.create,
+  FuncionarioController.create
+);
+router.put(
+  `/funcionarios/:id`,
+  FuncionarioMiddleware.update,
+  FuncionarioController.update
+);
 router.delete(`/funcionarios/:id`, FuncionarioController.delete);
 
 //============= FORNECEDORES =================
 router.get(`/fornecedores`, FornecedorController.index);
 router.get(`/fornecedores/:id`, FornecedorController.show);
-router.post(`/fornecedores`, FornecedorController.create);
-router.put(`/fornecedores/:id`, FornecedorController.update);
+router.post(
+  `/fornecedores`,
+  FornecedorMiddleware.create,
+  FornecedorController.create
+);
+router.put(
+  `/fornecedores/:id`,
+  FornecedorMiddleware.update,
+  FornecedorController.update
+);
 router.delete(`/fornecedores/:id`, FornecedorController.delete);
 
 //============= CLIENTES =================
 router.get(`/clientes`, ClienteController.index);
 router.get(`/clientes/:id`, ClienteController.show);
-router.post(`/clientes`, ClienteController.create);
-router.put(`/clientes/:id`, ClienteController.update);
+router.post(`/clientes`, ClienteMiddleware.create, ClienteController.create);
+router.put(`/clientes/:id`, ClienteMiddleware.update, ClienteController.update);
 router.delete(`/clientes/:id`, ClienteController.delete);
 
 //============= CARDAPIOS =================

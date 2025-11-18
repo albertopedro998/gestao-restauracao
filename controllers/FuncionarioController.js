@@ -1,6 +1,6 @@
 const { Op } = require("sequelize");
 const { Funcionario } = require("../models");
-
+const bcrypt = require("bcryptjs");
 class FuncionarioController {
   async index(req, res) {
     let { nome, email, limit, page, sort } = req.query;
@@ -44,6 +44,7 @@ class FuncionarioController {
   }
   async create(req, res) {
     try {
+      req.body.senha = await bcrypt.hash(req.body.password, 8);
       const funcionario = await Funcionario.create(req.body);
 
       return res.json(funcionario);
