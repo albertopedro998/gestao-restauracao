@@ -1,46 +1,71 @@
 const { Router } = require("express");
 const multer = require("multer");
 
-const FuncionarioController = require("./controllers/FuncionarioController");
-const FuncionarioMiddleware = require("./middleware/FuncionarioMiddleware");
+const FuncionarioController = require("./src/controllers/FuncionarioController");
+const FuncionarioMiddleware = require("./src/middleware/FuncionarioMiddleware");
 
-const FornecedorController = require("./controllers/FornecedorController");
-const FornecedorMiddleware = require("./middleware/FornecedorMiddleware");
+const FornecedorController = require("./src/controllers/FornecedorController");
+const FornecedorMiddleware = require("./src/middleware/FornecedorMiddleware");
 
-const ClienteController = require("./controllers/ClienteController");
-const ClienteMiddleware = require("./middleware/ClienteMiddleware");
+const ClienteController = require("./src/controllers/ClienteController");
+const ClienteMiddleware = require("./src/middleware/ClienteMiddleware");
 
-const CardapioController = require("./controllers/CardapioController");
+const CardapioController = require("./src/controllers/CardapioController");
 
-const MesaController = require("./controllers/MesaController");
+const MesaController = require("./src/controllers/MesaController");
 
-const ProdutoController = require("./controllers/ProdutoController");
+const ProdutoController = require("./src/controllers/ProdutoController");
+const ProdutoMiddleware = require("./src/middleware/ProdutoMiddleware");
 
-const EstoqueController = require("./controllers/EstoqueController");
+const EstoqueController = require("./src/controllers/EstoqueController");
 
-const PagamentoController = require("./controllers/PagamentoController");
+const PagamentoController = require("./src/controllers/PagamentoController");
 
-const CaixaController = require("./controllers/CaixaController");
+const CaixaController = require("./src/controllers/CaixaController");
 
-const PedidoController = require("./controllers/PedidoController");
+const PedidoController = require("./src/controllers/PedidoController");
 
-const ProdutosPedidoController = require("./controllers/ProdutosPedidoController");
+const ProdutosPedidoController = require("./src/controllers/ProdutosPedidoController");
 
-const SessionController = require("./controllers/SessionController");
+const SessionController = require("./src/controllers/SessionController");
+
+const PDF = require("./src/helpers/PDF");
+const EXCEL = require("./src/helpers/EXCEL");
 
 const router = Router();
-const file = multer(require("./config/multer"));
+const file = multer(require("./src/config/multer"));
 
 //============= SESSÕES E ROTAS PÚBLICAS =================
 router.post(`/login`, SessionController.login);
 router.post(`/logout`, SessionController.logout);
+
+//============= RELATÓRIOS, FATURAS ==============
+router.post(`/relatorios/:type`, async (req, res) => {
+  if (req.params.type.includes("pdf")) {
+    await PDF.init();
+    await PDF.gerar(`${new Date().getTime()}.pdf`, req.body.conteudo);
+  } else {
+    const cols = req.body.conteudo.cols;
+    EXCEL.createBook("teste", cols);
+    for (const row of req.body.conteudo.rows) {
+      EXCEL.newRow(row);
+    }
+
+    EXCEL.saveBook(`./src/documentos/relatorios/${new Date().getTime()}-excel`);
+  }
+
+  return res.json({ sucesso: "" });
+});
 
 //ROTAS PRIVADAS APARTIR DESTE PONTO
 router.use(SessionController.isLogged);
 
 //============= UPLOADS DE ARQUIVOS =================
 router.post(`/uploads`, file.single("file"), (req, res) => {
-  return res.send("Sucesso");
+  if (req.file) {
+    return res.json({ name: req.file.originalname, foto: req.file.filename });
+  }
+  return res.status(500).json({ mensagem: "Nenhum arquivo enviado." });
 });
 
 //============= FUNCIONARIOS =================
@@ -97,7 +122,7 @@ router.delete(`/mesas/:id`, MesaController.delete);
 //============= PRODUTOS =================
 router.get(`/produtos`, ProdutoController.index);
 router.get(`/produtos/:id`, ProdutoController.show);
-router.post(`/produtos`, ProdutoController.create);
+router.post(`/produtos`, ProdutoMiddleware.create, ProdutoController.create);
 router.put(`/produtos/:id`, ProdutoController.update);
 router.delete(`/produtos/:id`, ProdutoController.delete);
 

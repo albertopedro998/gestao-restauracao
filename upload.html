@@ -1,18 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Upload de arquivos</title>
-</head>
-<body>
-    <h1>
-        Upload de imagens
-    </h1>
-    <form action="http://localhost:3000/uploads" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" id="">
+  </head>
+  <body>
+    <h1>Upload de imagens</h1>
+    <form
+      action="http://localhost:3000/uploads"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <input type="file" name="file" id="" />
 
-        <input type="submit" value="Enviar">
+      <input type="submit" value="Enviar" />
     </form>
-</body>
+
+    <!-- <script>
+      document.querySelector("input[type=submit]").onclick = function (ev) {
+        form = new FormData();
+
+        form.append(
+          "file",
+          document.querySelector("input[type=file]").files[0]
+        );
+
+        fetch("http://localhost:3000/uploads", {
+          method: "POST",
+          body: form,
+          headers: {
+            "Content-Type": "multipart/form-data",
+            authorization: "Bearer "+localStorage.getItem("token")
+          },
+        });
+
+        return false;
+      };
+    </script> -->
+  </body>
 </html>
