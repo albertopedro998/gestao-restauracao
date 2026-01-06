@@ -3,7 +3,7 @@ const { Cliente } = require("../models");
 
 class ClienteController {
   async index(req, res) {
-    let { nome, email, limit, page, sort } = req.query;
+    let { nome, email, empresaId, limit, page, sort } = req.query;
     limit = limit | 25;
     page = page | 1;
     let where = {};
@@ -25,6 +25,14 @@ class ClienteController {
         ...where,
         email: {
           [Op.like]: email,
+        },
+      };
+    }
+    if (empresaId) {
+      where = {
+        ...where,
+        empresaId: {
+          [Op.eq]: empresaId,
         },
       };
     }

@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.belongsTo(models.Produto);
+      this.belongsTo(models.Empresa);
     }
   }
   MovimentoEstoque.init(
@@ -19,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       dataMovimento: DataTypes.DATE,
       observacao: DataTypes.TEXT,
       produtoId: DataTypes.INTEGER,
+      empresaId: DataTypes.INTEGER,
     },
     {
       sequelize,

@@ -3,7 +3,7 @@ const { Cardapio } = require("../models");
 
 class CardapioController {
   async index(req, res) {
-    let { nome, limit, page, sort } = req.query;
+    let { nome, empresaId, limit, page, sort } = req.query;
     limit = limit | 25;
     page = page | 1;
     let where = {};
@@ -16,7 +16,14 @@ class CardapioController {
     if (nome) {
       where = {
         nome: {
-          [Op.eq]: nome,
+          [Op.like]: nome,
+        },
+      };
+    }
+    if (empresaId) {
+      where = {
+        empresaId: {
+          [Op.eq]: empresaId,
         },
       };
     }

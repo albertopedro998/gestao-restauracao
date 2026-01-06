@@ -3,7 +3,7 @@ const { Fornecedor } = require("../models");
 
 class FornecedorController {
   async index(req, res) {
-    let { nome, email, createdAt, limit, page, sort } = req.query;
+    let { nome, email, empresaId, createdAt, limit, page, sort } = req.query;
     limit = limit | 25;
     page = page | 1;
     let where = {};
@@ -25,6 +25,14 @@ class FornecedorController {
         ...where,
         email: {
           [Op.like]: email,
+        },
+      };
+    }
+    if (empresaId) {
+      where = {
+        ...where,
+        empresaId: {
+          [Op.eq]: empresaId,
         },
       };
     }
@@ -66,7 +74,9 @@ class FornecedorController {
       await fornecedor.update(req.body);
       return res.json({ mensagem: "Atualizado com sucesso" });
     } catch (error) {
-      return res.status(500).json({ erro: "Não foi possível realizar a operação" });
+      return res
+        .status(500)
+        .json({ erro: "Não foi possível realizar a operação" });
     }
   }
   async delete(req, res) {
@@ -76,7 +86,9 @@ class FornecedorController {
       await fornecedor.destroy();
       return res.json({ mensagem: "Deletado com sucesso" });
     } catch (error) {
-      return res.status(500).json({ erro: "Não foi possível realizar a operação" });
+      return res
+        .status(500)
+        .json({ erro: "Não foi possível realizar a operação" });
     }
   }
 }

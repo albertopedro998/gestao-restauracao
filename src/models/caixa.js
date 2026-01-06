@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.belongsTo(models.Funcionario)
+      this.belongsTo(models.Empresa);
     }
   }
   Caixa.init({
@@ -20,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     saldoInicial: DataTypes.DOUBLE,
     saldoFinal: DataTypes.DOUBLE,
     status: DataTypes.STRING,
+    empresaId: DataTypes.INTEGER,
     funcionarioId: DataTypes.INTEGER
   }, {
     sequelize,

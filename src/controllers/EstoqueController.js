@@ -1,5 +1,6 @@
 const { Op } = require("sequelize");
-const { Produto, MovimentoEstoque } = require("../models");
+const { Produto, MovimentoEstoque, sequelize } = require("../models");
+const ProdutoController = require("./ProdutoController");
 
 class EstoqueController {
   async index(req, res) {
@@ -8,6 +9,7 @@ class EstoqueController {
       quantidade,
       dataMovimento,
       observacao,
+      empresaId,
       produtoId,
       limit,
       page,
@@ -53,11 +55,19 @@ class EstoqueController {
         },
       };
     }
+    if (empresaId) {
+      where = {
+        ...where,
+        empresaId: {
+          [Op.eq]: empresaId,
+        },
+      };
+    }
     if (produtoId) {
       where = {
         ...where,
         produtoId: {
-          [Op.like]: produtoId,
+          [Op.eq]: produtoId,
         },
       };
     }
@@ -80,11 +90,32 @@ class EstoqueController {
   }
   async create(req, res) {
     try {
-      const produto = await MovimentoEstoque.create(req.body);
+      const produtoFinal = await sequelize.transaction(async (elem) => {
+        const produto = await MovimentoEstoque.create(req.body);
 
-      return res.json(produto);
+        const prod = await Produto.findByPk(produto.produtoId);
+
+        const lastQtdStock = parseInt(prod.estoqueAtual);
+        const sumQtd = parseInt(produto.quantidade);
+
+        //CALCULANDO A QUANTIDADE EM ESTOQUE  DEPOIS DE SER FEITO O MOVIMENTO
+        const newQtd = produto.tipo.includes("entrada")
+          ? lastQtdStock + sumQtd
+          : lastQtdStock - sumQtd;
+
+        //ATUALIZANDO A QUANTIDADE NO BANCO
+        await prod.update({
+          estoqueAtual: newQtd,
+        });
+
+        return produto;
+      });
+
+      return res.json(produtoFinal);
     } catch (error) {
-      return res.produtoId(401).json({ error: "Não foi possível criar" });
+      return res
+        .status(401)
+        .json({ error: "Não foi possível criar", msg: error });
     }
   }
   async update(req, res) {

@@ -8,6 +8,7 @@ class CaixaController {
       dataFechamento,
       saldoInicial,
       saldoFinal,
+      empresaId,
       funcionarioId,
       status,
       limit,
@@ -51,6 +52,14 @@ class CaixaController {
         ...where,
         saldoInicial: {
           [Op.like]: saldoInicial,
+        },
+      };
+    }
+    if (empresaId) {
+      where = {
+        ...where,
+        empresaId: {
+          [Op.eq]: empresaId,
         },
       };
     }

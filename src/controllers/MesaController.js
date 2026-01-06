@@ -3,7 +3,7 @@ const { Mesa } = require("../models");
 
 class MesaController {
   async index(req, res) {
-    let { numero, status, limit, page, sort } = req.query;
+    let { numero, status, empresaId, limit, page, sort } = req.query;
     limit = limit | 25;
     page = page | 1;
     let where = {};
@@ -25,6 +25,14 @@ class MesaController {
         ...where,
         status: {
           [Op.like]: status,
+        },
+      };
+    }
+    if (empresaId) {
+      where = {
+        ...where,
+        empresaId: {
+          [Op.eq]: empresaId,
         },
       };
     }

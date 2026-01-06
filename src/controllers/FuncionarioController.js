@@ -1,9 +1,9 @@
 const { Op } = require("sequelize");
-const { Funcionario } = require("../models");
+const { Funcionario, User, sequelize } = require("../models");
 const bcrypt = require("bcryptjs");
 class FuncionarioController {
   async index(req, res) {
-    let { nome, email, dtNascimento, limit, page, sort } = req.query;
+    let { nome, email, empresaId, dtNascimento, limit, page, sort } = req.query;
     limit = parseInt(limit) || 1000;
     page = page || 1;
     let where = {};
@@ -17,6 +17,14 @@ class FuncionarioController {
       where = {
         nome: {
           [Op.like]: nome,
+        },
+      };
+    }
+    if (empresaId) {
+      where = {
+        ...where,
+        empresaId: {
+          [Op.eq]: empresaId,
         },
       };
     }
@@ -55,19 +63,27 @@ class FuncionarioController {
   }
   async create(req, res) {
     try {
-      const userExists = await Funcionario.findOne({
-        where: { nif: req.body.nif },
+      const result = await sequelize.transaction(async (t) => {
+        const userExists = await User.findOne({
+          where: { NIF: req.body.nif },
+        });
+
+        if (userExists) {
+          return res.status(500).json({
+            erro: "Já existe este NIF na base de dados",
+            campo: "nif",
+          });
+        }
+        req.body.senha = await bcrypt.hash(req.body.password, 8);
+        const user = await User.create({ ...req.body, NIF: req.body.nif });
+        const funcionario = await Funcionario.create({
+          ...req.body,
+          userId: user.id,
+        });
+        return funcionario;
       });
 
-      if (userExists) {
-        return res
-          .status(500)
-          .json({ erro: "Já existe este NIF na base de dados", campo: "nif" });
-      }
-      req.body.senha = await bcrypt.hash(req.body.password, 8);
-      const funcionario = await Funcionario.create(req.body);
-
-      return res.json(funcionario);
+      return res.json(result);
     } catch (error) {
       return res.status(401).json({ error: "Não foi possível criar" });
     }

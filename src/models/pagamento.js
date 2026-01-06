@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.belongsTo(models.Pedido)
       this.belongsTo(models.Caixa)
+      this.belongsTo(models.Empresa);
     }
   }
   Pagamento.init({
@@ -21,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     troco: DataTypes.DOUBLE,
     dataPagamento: DataTypes.DATE,
     pedidoId: DataTypes.INTEGER,
-    caixaId: DataTypes.INTEGER
+    caixaId: DataTypes.INTEGER,
+    empresaId: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Pagamento',

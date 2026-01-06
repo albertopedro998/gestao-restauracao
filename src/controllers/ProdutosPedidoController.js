@@ -1,11 +1,19 @@
 const { Op } = require("sequelize");
-const { ProdutosPedido, Produto, Pedido } = require("../models");
+const {
+  ProdutosPedido,
+  Produto,
+  Pedido,
+  Mesa,
+  Cliente,
+  Funcionario,
+} = require("../models");
 
 class ProdutosPedidoController {
   async index(req, res) {
     let {
       produtoId,
       pedidoId,
+      empresaId,
       quantidade,
       precoUnitario,
       subtotal,
@@ -37,6 +45,14 @@ class ProdutosPedidoController {
         },
       };
     }
+    if (empresaId) {
+      where = {
+        ...where,
+        empresaId: {
+          [Op.eq]: empresaId,
+        },
+      };
+    }
     if (quantidade) {
       where = {
         ...where,
@@ -63,7 +79,13 @@ class ProdutosPedidoController {
     }
     return res.json(
       await ProdutosPedido.findAll({
-        include: [Produto, Pedido],
+        include: [
+          Produto,
+          {
+            model: Pedido,
+            include: [Mesa, Cliente, Funcionario],
+          },
+        ],
         where,
         limit,
         offset: (page - 1) * limit,

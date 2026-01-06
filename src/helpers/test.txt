@@ -1,0 +1,1 @@
+,ID,NOME,Preço_venda,Preço_compra,Quantidade em estoque,DATA_CADASTRO;,1,Speed,200,350,10,28/11/2025;,4,Blue,200,300,10,28/11/2025;,5,Coca cola,500,200,5,28/11/2025;,7,Coca cola grande,600,300,1,01/12/2025;,8,Coca cola,600,300,30,01/12/2025

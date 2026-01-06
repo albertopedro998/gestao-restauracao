@@ -10,11 +10,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.hasMany(models.Produto);
+      this.belongsTo(models.Empresa);
     }
   }
   Cardapio.init(
     {
       nome: DataTypes.STRING,
+      empresaId: DataTypes.INTEGER,
     },
     {
       sequelize,

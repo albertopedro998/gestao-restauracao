@@ -9,6 +9,7 @@ class PedidoController {
       mesaId,
       clienteId,
       status,
+      empresaId,
       funcionarioId,
       limit,
       page,
@@ -43,6 +44,14 @@ class PedidoController {
         ...where,
         mesaId: {
           [Op.eq]: mesaId,
+        },
+      };
+    }
+    if (empresaId) {
+      where = {
+        ...where,
+        empresaId: {
+          [Op.eq]: empresaId,
         },
       };
     }
@@ -93,18 +102,30 @@ class PedidoController {
 
       return res.json(pedido);
     } catch (error) {
-      return res.status(401).json({ error: "Não foi possível criar" });
+      return res
+        .status(401)
+        .json({ error: "Não foi possível criar", details: error.fields });
     }
   }
   async update(req, res) {
     const pedido = await Pedido.findByPk(req.params.id);
 
-    await pedido.update(req.body);
+    try {
+      const result = await pedido.update(req.body);
+      return res.json({ result });
+    } catch (error) {
+      return res.status(401).json(error);
+    }
   }
   async delete(req, res) {
     const pedido = await Pedido.findByPk(req.params.id);
 
-    await pedido.destroy();
+    try {
+      const result = await pedido.destroy();
+      return res.json({ result });
+    } catch (error) {
+      return res.status(401).json(error);
+    }
   }
 }
 

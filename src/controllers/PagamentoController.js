@@ -9,6 +9,7 @@ class PagamentoController {
       troco,
       dataPagamento,
       pedidoId,
+      empresaId,
       caixaId,
       limit,
       page,
@@ -35,6 +36,14 @@ class PagamentoController {
         ...where,
         pedidoId: {
           [Op.eq]: pedidoId,
+        },
+      };
+    }
+    if (empresaId) {
+      where = {
+        ...where,
+        empresaId: {
+          [Op.eq]: empresaId,
         },
       };
     }

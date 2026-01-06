@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Fornecedor);
       this.hasMany(models.MovimentoEstoque);
       this.hasMany(models.ProdutosPedido);
+      this.belongsTo(models.Empresa, {
+        foreignKey: "empresaId",
+        as: "empresa",
+      });
     }
   }
   Produto.init(
@@ -25,6 +29,8 @@ module.exports = (sequelize, DataTypes) => {
       status: DataTypes.STRING,
       fornecedorId: DataTypes.INTEGER,
       cardapioId: DataTypes.INTEGER,
+      //categoriaId: DataTypes.INTEGER,
+      empresaId: DataTypes.INTEGER,
     },
     {
       sequelize,

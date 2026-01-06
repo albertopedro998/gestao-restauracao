@@ -12,10 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.hasMany(models.Pedido);
-    }
-
-    async verifySession(password) {
-      return await bcrypt.compare(password, this.senha);
+      this.belongsTo(models.Empresa);
+      this.belongsTo(models.User);
     }
   }
   Funcionario.init(
@@ -27,6 +25,8 @@ module.exports = (sequelize, DataTypes) => {
       foto: DataTypes.STRING,
       dtNascimento: DataTypes.DATE,
       status: DataTypes.STRING,
+      empresaId: DataTypes.INTEGER,
+      userId: DataTypes.INTEGER,
     },
     {
       sequelize,

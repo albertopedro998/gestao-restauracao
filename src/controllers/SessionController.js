@@ -1,23 +1,39 @@
 const jwt = require("jsonwebtoken");
 const { secret, expiresIn } = require("../config/auth");
-const { Funcionario } = require("../models");
+const { Funcionario, Empresa, User } = require("../models");
 const { promisify } = require("util");
 
 class SessionController {
   async login(req, res) {
-    const funcionario = await Funcionario.findOne({
-      where: { nif: req.body.nif },
+    const user = await User.findOne({
+      where: { NIF: req.body.nif },
+      include: [Funcionario, Empresa],
     });
 
-    if (!funcionario) {
+    if (!user) {
       return res.status(401).json({ msg: "email ou senha inválida." });
     }
 
-    if (await funcionario.verifySession(req.body.senha)) {
-      const { nome, nif, foto, dtNascimento, cargo :funcao } = funcionario
+    if (await user.verifySession(req.body.senha)) {
+      var { id, nome, NIF: nif, dtNascimento } = user;
+      if (user.Funcionarios.length) {
+        var {
+          id,
+          nome,
+          foto,
+          dtNascimento,
+          cargo: funcao,
+          empresaId: empresa,
+        } = user.Funcionarios[0];
+      } else {
+        var { nome, id: empresa, logotipo: foto } = user.Empresas[0];
+        funcao = "Admin";
+      }
       return res.json({
-        token: jwt.sign({ id: funcionario.id }, secret, { expiresIn }),
-        user: {nome, nif, foto, dtNascimento, funcao},
+        token: jwt.sign({ id: user.id, funcao, empresa }, secret, {
+          expiresIn,
+        }),
+        user: { id, nome, nif, empresa, foto, dtNascimento, funcao },
       });
     }
     return res.status(401).json({ msg: "email ou senha inválida." });
@@ -34,6 +50,7 @@ class SessionController {
 
     try {
       const decode = await promisify(jwt.verify)(token, secret);
+
       req.user = await Funcionario.findByPk(decode.id, {
         attributes: { exclude: ["senha"] },
       });

@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Cliente);
       this.belongsTo(models.Funcionario);
       this.hasMany(models.ProdutosPedido)
+      this.belongsTo(models.Empresa);
     }
   }
   Pedido.init(
@@ -23,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       mesaId: DataTypes.INTEGER,
       clienteId: DataTypes.INTEGER,
       funcionarioId: DataTypes.INTEGER,
+      empresaId: DataTypes.INTEGER,
     },
     {
       sequelize,

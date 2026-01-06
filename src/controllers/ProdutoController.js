@@ -10,6 +10,7 @@ class ProdutoController {
       estoqueAtual,
       status,
       fornecedorId,
+      empresaId,
       cardapioId,
       limit,
       page,
@@ -55,6 +56,14 @@ class ProdutoController {
         },
       };
     }
+    if (empresaId) {
+      where = {
+        ...where,
+        empresaId: {
+          [Op.eq]: empresaId,
+        },
+      };
+    }
     if (cardapioId) {
       where = {
         ...where,
@@ -90,11 +99,17 @@ class ProdutoController {
     );
   }
   async show(req, res) {
-    const produto = await Produto.findByPk(req.params.id, {
-      include: [Fornecedor],
-    });
-
-    return res.json(produto);
+    try {
+      /* if (req.user.cargo && !req.user.cargo.includes("Admin")) {
+        throw new Error("Permissão negada");
+      } */
+      const produto = await Produto.findByPk(req.params.id, {
+        include: [Fornecedor],
+      });
+      return res.json(produto);
+    } catch (error) {
+      return res.json({ error });
+    }
   }
   async create(req, res) {
     try {
@@ -119,6 +134,9 @@ class ProdutoController {
     const produto = await Produto.findByPk(req.params.id);
 
     try {
+      if (req.user.cargo && !req.user.cargo.includes("Admin")) {
+        throw new Error("Permissão negada");
+      }
       await produto.destroy();
       return res.json({ mensagem: "Operação realizada com sucesso" });
     } catch (e) {

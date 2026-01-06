@@ -12,10 +12,16 @@ module.exports = {
       produtoId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: { key: "id", model: "produtos" },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       pedidoId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: { key: "id", model: "pedidos" },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       quantidade: {
         type: Sequelize.INTEGER,
@@ -27,6 +33,16 @@ module.exports = {
       },
       subtotal: {
         type: Sequelize.DOUBLE,
+        allowNull: false,
+      },
+      empresaId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "empresas",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
         allowNull: false,
       },
       createdAt: {

@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.hasMany(models.Produto);
+      this.belongsTo(models.Empresa);
     }
   }
   Fornecedor.init(
@@ -18,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       telefone: DataTypes.STRING,
       email: DataTypes.STRING,
       nif: DataTypes.STRING,
+      empresaId: DataTypes.INTEGER,
     },
     {
       sequelize,

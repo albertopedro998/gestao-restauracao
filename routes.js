@@ -1,6 +1,8 @@
 const { Router } = require("express");
 const multer = require("multer");
 
+const EmpresaController = require("./src/controllers/EmpresaController");
+
 const FuncionarioController = require("./src/controllers/FuncionarioController");
 const FuncionarioMiddleware = require("./src/middleware/FuncionarioMiddleware");
 
@@ -36,8 +38,18 @@ const router = Router();
 const file = multer(require("./src/config/multer"));
 
 //============= SESSÕES E ROTAS PÚBLICAS =================
+router.post(`/empresas`, EmpresaController.create);
+
 router.post(`/login`, SessionController.login);
 router.post(`/logout`, SessionController.logout);
+
+//============= UPLOADS DE ARQUIVOS =================
+router.post(`/uploads`, file.single("file"), (req, res) => {
+  if (req.file) {
+    return res.json({ name: req.file.originalname, foto: req.file.filename });
+  }
+  return res.status(500).json({ mensagem: "Nenhum arquivo enviado." });
+});
 
 //============= RELATÓRIOS, FATURAS ==============
 router.post(`/relatorios/:type`, async (req, res) => {
@@ -59,14 +71,6 @@ router.post(`/relatorios/:type`, async (req, res) => {
 
 //ROTAS PRIVADAS APARTIR DESTE PONTO
 router.use(SessionController.isLogged);
-
-//============= UPLOADS DE ARQUIVOS =================
-router.post(`/uploads`, file.single("file"), (req, res) => {
-  if (req.file) {
-    return res.json({ name: req.file.originalname, foto: req.file.filename });
-  }
-  return res.status(500).json({ mensagem: "Nenhum arquivo enviado." });
-});
 
 //============= FUNCIONARIOS =================
 router.get(`/funcionarios`, FuncionarioController.index);
